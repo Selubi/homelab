@@ -30,10 +30,10 @@ jobs:
     - name: Copy injection script
       run: |
         scp -i ssh_key \
-        ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }}:/etc/inject.sh
+        ./inject.sh ${{ inputs.username }}@${{ inputs.target }}:/etc/inject.sh
 
     - name: Run SSH command
       run: |
         ssh -i ssh_key \
-        ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
-        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ github.workflow.inputs.commands }}"
+        ${{ inputs.username }}@${{ inputs.target }} \
+        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ inputs.commands }}"
