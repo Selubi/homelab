@@ -5,8 +5,7 @@ on:
     inputs:
         username:
             description: 'Username on target machine'
-            required: false
-            default: 'selubi'
+            required: true
         target:
             description: 'FQDN or IP address of target machine'
             required: true
