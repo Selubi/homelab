@@ -1,0 +1,34 @@
+name: Execute IaC via SSH
+
+on:
+  workflow_dispatch:
+    inputs:
+        username:
+            description: 'Username on target machine'
+            required: false
+            default: 'selubi'
+        target:
+            description: 'FQDN or IP address of target machine'
+            required: true
+        commands:
+            description: 'Commands to run'
+            required: true
+
+jobs:
+  ssh-task:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Copy injection script
+      run: |
+        scp -i "${{ secrets.TAILSCALE_SSH_KEY }}" \
+        ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.fqdn }}
+
+    - name: Run SSH command
+      run: |
+        ssh -i "${{ secrets.TAILSCALE_SSH_KEY }}" \
+        ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
+        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ github.workflow.inputs.commands }}"

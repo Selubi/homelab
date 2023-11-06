@@ -8,7 +8,7 @@ function usage() {
 }
 
 # Installs 1password CLI if its yet installed
-command -v op || install_1password.sh
+command -v op || scripts/install_1password.sh
 
 # Only accept one argument
 if [ $# -ne 1 ]; then
@@ -17,5 +17,5 @@ if [ $# -ne 1 ]; then
 fi
 
 # Get the secret
-op read $1
+op read "$1"
 

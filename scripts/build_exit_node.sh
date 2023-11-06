@@ -9,7 +9,7 @@ if [ "$(id -u)" -ne 0 ]; then echo "$0: Please run as root." >&2; exit 1; fi
 set -e
 
 # Get tailscale auth key
-TAILSCALE_AUTH_KEY=$(get_secret.sh op://secrets/TAILSCALE_AUTH_KEY/credential)
+TAILSCALE_AUTH_KEY=$(scripts/get_secret.sh op://secrets/TAILSCALE_AUTH_KEY/credential)
 
 # Add Tailscale’s package signing key and repository
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
