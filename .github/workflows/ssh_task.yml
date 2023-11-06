@@ -28,12 +28,12 @@ jobs:
         chmod 600 ssh_key
 
     - name: Copy injection script
-      run: |
-        scp -i ssh_key \
+      run: | # Host key check disabled because this workflow is ran on transient container
+        scp -i ssh_key -o StrictHostKeyChecking=no \
         ./inject.sh ${{ inputs.username }}@${{ inputs.target }}:/etc/inject.sh
 
     - name: Run SSH command
-      run: |
-        ssh -i ssh_key \
+      run: | # Host key check disabled because this workflow is ran on transient container
+        ssh -i ssh_key -o StrictHostKeyChecking=no \
         ${{ inputs.username }}@${{ inputs.target }} \
         "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ inputs.commands }}"
