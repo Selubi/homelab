@@ -8,7 +8,7 @@ function usage() {
 }
 
 # Installs 1password CLI if its yet installed
-command -v op || scripts/install_1password.sh
+command -v op &>/dev/null || scripts/install_1password.sh >&2
 
 # Only accept one argument
 if [ $# -ne 1 ]; then
