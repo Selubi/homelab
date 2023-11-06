@@ -30,10 +30,10 @@ jobs:
     - name: Copy injection script
       run: | # Host key check disabled because this workflow is ran on transient container
         scp -i ssh_key -o StrictHostKeyChecking=no \
-        ./inject.sh ${{ inputs.username }}@${{ inputs.target }}:/etc/inject.sh
+        ./inject.sh ${{ inputs.username }}@${{ inputs.target }}:/tmp/inject.sh
 
     - name: Run SSH command
       run: | # Host key check disabled because this workflow is ran on transient container
         ssh -i ssh_key -o StrictHostKeyChecking=no \
         ${{ inputs.username }}@${{ inputs.target }} \
-        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ inputs.commands }}"
+        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} sudo /tmp/inject.sh ${{ inputs.commands }}"
