@@ -22,13 +22,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.TAILSCALE_SSH_KEY }}" > ssh_key
+        chmod 600 ssh_key
+        ssh-add ssh_key
+
     - name: Copy injection script
       run: |
-        scp -i "${{ secrets.TAILSCALE_SSH_KEY }}" \
-        ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.fqdn }}
+        scp ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }}:/etc/inject.sh
 
     - name: Run SSH command
       run: |
-        ssh -i "${{ secrets.TAILSCALE_SSH_KEY }}" \
-        ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
+        ssh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
         "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ github.workflow.inputs.commands }}"
