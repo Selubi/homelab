@@ -35,4 +35,4 @@ jobs:
       run: | # Host key check disabled because this workflow is ran on transient container
         ssh -i ssh_key -o StrictHostKeyChecking=no \
         ${{ inputs.username }}@${{ inputs.target }} \
-        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} sudo /tmp/inject.sh ${{ inputs.commands }}"
+        "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} sudo -E /tmp/inject.sh ${{ inputs.commands }}"
