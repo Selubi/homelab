@@ -10,7 +10,9 @@ Dependencies:
 # How this works
 A minimalist IaC implementation with SSH and Shell Scripts.
 
-Uses [GitHub Actions](.github/workflows/ssh_task.yml) to inject [inject.sh](./inject.sh) and in turn it will fetch this repo from the internet. From there we can run anything inside [the script folder](./scripts) which the IaC resides.
+Uses [GitHub Actions](.github/workflows/ssh_task.yml) to inject [inject.sh](./inject.sh) to the target machine and in turn it will fetch this repo from the internet. From there we can run anything inside [the script folder](./scripts) which the IaC resides.
+
+For private servers, after tailscale (with tailscale SSH) is setup, deny all incoming connection. Access to the machine shall be done via tailscale SSH.
 
 # Requirements
 Set the following on GitHub Secrets:
