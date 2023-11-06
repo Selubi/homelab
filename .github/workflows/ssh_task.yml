@@ -26,13 +26,14 @@ jobs:
       run: |
         echo "${{ secrets.TAILSCALE_SSH_KEY }}" > ssh_key
         chmod 600 ssh_key
-        ssh-add ssh_key
 
     - name: Copy injection script
       run: |
-        scp ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }}:/etc/inject.sh
+        scp -i ssh_key \
+        ./inject.sh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }}:/etc/inject.sh
 
     - name: Run SSH command
       run: |
-        ssh ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
+        ssh -i ssh_key \
+        ${{ github.workflow.inputs.username }}@${{ github.workflow.inputs.target }} \
         "OP_SERVICE_ACCOUNT_TOKEN=${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }} ${{ github.workflow.inputs.commands }}"
