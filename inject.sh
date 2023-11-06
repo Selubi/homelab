@@ -6,8 +6,8 @@ HOMELAB_DIRECTORY="/etc/homelab"
 
 # Install git
 if ! command -v git &>/dev/null; then
-    command -v apt &>/dev/null && apt install git
-    command -v yum &>/dev/null && yum install git
+    command -v apt &>/dev/null && apt -y install git
+    command -v yum &>/dev/null && yum -y install git
 fi
 
 # Clean clone homelab repository

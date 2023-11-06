@@ -17,7 +17,7 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list
 
 # Install Tailscale
 apt-get update
-apt-get install tailscale
+apt-get -y install tailscale
 
 # Enable IP formwarding
 echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf

@@ -27,7 +27,7 @@ if command -v apt; then
     mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
     curl -sS https://downloads.1password.com/linux/keys/1password.asc |
         gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
-    apt update && apt install 1password-cli
+    apt update && apt -y install 1password-cli
 fi
 
 # YUM-based system
